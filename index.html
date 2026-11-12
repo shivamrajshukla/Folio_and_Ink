@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Folio & Ink – Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:      #1a1208;
+      --cream:    #f5f0e8;
+      --amber:    #c8852a;
+      --amber-lt: #e8b870;
+      --warm-gray:#7a6e5f;
+      --paper:    #fdfaf4;
+      --shadow:   rgba(26,18,8,0.12);
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--ink);
+      padding: 0 3rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      height: 88px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 16px var(--shadow);
+    }
+    .logo-circle {
+      width: 52px; height: 52px;
+      background: var(--amber);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--ink);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .brand-text h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--cream);
+      letter-spacing: 0.02em;
+    }
+    .brand-text p {
+      font-size: 0.72rem;
+      color: var(--amber-lt);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-top: 1px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--cream);
+      border-bottom: 2px solid var(--amber);
+      padding: 0 3rem;
+      display: flex;
+      gap: 0;
+    }
+    nav a {
+      display: inline-block;
+      padding: 1rem 1.5rem;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      text-decoration: none;
+      border-bottom: 3px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    nav a:hover, nav a.active {
+      color: var(--amber);
+      border-bottom-color: var(--amber);
+    }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 5rem 3rem 6rem;
+    }
+
+    /* Hero */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      margin-bottom: 6rem;
+    }
+    .hero-text .eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--amber);
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+    .hero-text h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 4vw, 3.4rem);
+      line-height: 1.18;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+    }
+    .hero-text h2 em {
+      color: var(--amber);
+      font-style: italic;
+    }
+    .hero-text p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--warm-gray);
+      margin-bottom: 2rem;
+    }
+    .btn-primary {
+      display: inline-block;
+      background: var(--amber);
+      color: #fff;
+      padding: 0.85rem 2.2rem;
+      border-radius: 3px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: #a96e1e; transform: translateY(-1px); }
+
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .book-stack {
+      display: grid;
+      grid-template-columns: repeat(3, 72px);
+      gap: 10px;
+      transform: perspective(600px) rotateY(-8deg);
+    }
+    .book-spine {
+      height: 160px;
+      border-radius: 3px 6px 6px 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.62rem;
+      color: rgba(255,255,255,0.9);
+      padding: 0.5rem;
+      box-shadow: 3px 3px 12px var(--shadow);
+      letter-spacing: 0.08em;
+    }
+    .s1 { background: #2d4a3e; margin-top: 20px; }
+    .s2 { background: #8b3a3a; margin-top: 0; }
+    .s3 { background: #2c3e6b; margin-top: 40px; }
+    .s4 { background: #5a3a2a; margin-top: 10px; }
+    .s5 { background: #1a4a4a; margin-top: 30px; }
+    .s6 { background: #6b4c2a; margin-top: 5px; }
+
+    /* Feature cards */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-bottom: 5rem;
+    }
+    .feature-card {
+      background: var(--cream);
+      border: 1px solid rgba(200,133,42,0.2);
+      border-radius: 6px;
+      padding: 2rem;
+      transition: box-shadow 0.2s;
+    }
+    .feature-card:hover { box-shadow: 0 4px 24px var(--shadow); }
+    .feature-icon {
+      width: 44px; height: 44px;
+      background: var(--amber);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .feature-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+    .feature-card p {
+      font-size: 0.88rem;
+      color: var(--warm-gray);
+      line-height: 1.65;
+    }
+
+    /* Quote */
+    .quote-band {
+      background: var(--ink);
+      color: var(--cream);
+      padding: 3rem 3.5rem;
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    .quote-band::before {
+      content: '"';
+      position: absolute;
+      top: -1.5rem; left: 1.5rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 12rem;
+      color: rgba(200,133,42,0.15);
+      line-height: 1;
+    }
+    .quote-band blockquote {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-style: italic;
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+    .quote-band cite {
+      display: block;
+      margin-top: 1rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--amber-lt);
+      font-style: normal;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.78rem;
+      color: var(--warm-gray);
+      border-top: 1px solid rgba(200,133,42,0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo-circle">F</div>
+    <div class="brand-text">
+      <h1>Folio &amp; Ink</h1>
+      <p>Curated Bookstore &amp; Reading Community</p>
+    </div>
+  </header>
+
+  <!-- NAV (LINKS) -->
+  <nav>
+    <a href="index.html" class="active">Home</a>
+    <a href="listofbooks.html">List of Books</a>
+    <a href="registration.html">Customer Registration</a>
+    <a href="feedback.html">Feedback</a>
+  </nav>
+
+  <!-- INFORMATION -->
+  <main>
+    <section class="hero">
+      <div class="hero-text">
+        <p class="eyebrow">Welcome to Folio &amp; Ink</p>
+        <h2>Every great story begins with the <em>right</em> book.</h2>
+        <p>We are delighted to welcome you to our curated online bookstore. Browse thousands of titles, discover new authors, and find the perfect read — delivered to your door.</p>
+        <a href="listofbooks.html" class="btn-primary">Browse Our Collection</a>
+      </div>
+      <div class="hero-visual">
+        <div class="book-stack">
+          <div class="book-spine s1">The Midnight Library</div>
+          <div class="book-spine s2">Dune</div>
+          <div class="book-spine s3">Sapiens</div>
+          <div class="book-spine s4">Beloved</div>
+          <div class="book-spine s5">Atomic Habits</div>
+          <div class="book-spine s6">1984</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="feature-card">
+        <div class="feature-icon">📚</div>
+        <h3>Vast Collection</h3>
+        <p>Thousands of titles spanning fiction, non-fiction, science, history, philosophy, and the arts.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🚚</div>
+        <h3>Fast Delivery</h3>
+        <p>Order before noon and receive your books within 2 business days anywhere in the country.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌟</div>
+        <h3>Member Benefits</h3>
+        <p>Register as a customer to enjoy exclusive discounts, early access to new arrivals, and personalised recommendations.</p>
+      </div>
+    </section>
+
+    <div class="quote-band">
+      <blockquote>
+        A reader lives a thousand lives before he dies. The man who never reads lives only one.
+        <cite>— George R.R. Martin</cite>
+      </blockquote>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2024 Folio &amp; Ink Bookstore. All rights reserved.
+  </footer>
+
+</body>
+</html>

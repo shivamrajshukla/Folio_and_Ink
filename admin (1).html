@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Folio & Ink – Stored Responses</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --ink:#1a1208; --cream:#f5f0e8; --amber:#c8852a; --amber-lt:#e8b870; --warm-gray:#7a6e5f; --paper:#fdfaf4; --shadow:rgba(26,18,8,0.12); }
+    body { font-family:'DM Sans',sans-serif; background:var(--paper); color:var(--ink); }
+    header { background:var(--ink); padding:0 3rem; display:flex; align-items:center; gap:1.2rem; height:88px; }
+    .logo-circle { width:52px; height:52px; background:var(--amber); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--ink); font-weight:700; }
+    .brand-text h1 { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--cream); }
+    .brand-text p { font-size:.72rem; color:var(--amber-lt); letter-spacing:.18em; text-transform:uppercase; }
+    nav { background:var(--cream); border-bottom:2px solid var(--amber); padding:0 3rem; display:flex; }
+    nav a { padding:1rem 1.5rem; font-size:.82rem; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:var(--warm-gray); text-decoration:none; border-bottom:3px solid transparent; }
+    nav a:hover, nav a.active { color:var(--amber); border-bottom-color:var(--amber); }
+    main { max-width:1100px; margin:0 auto; padding:3rem 3rem 5rem; }
+    h2 { font-family:'Playfair Display',serif; font-size:1.8rem; margin:2rem 0 .3rem; }
+    h2:first-child { margin-top:0; }
+    .note { color:var(--warm-gray); font-size:.85rem; margin-bottom:1rem; }
+    .table-wrapper { overflow-x:auto; border-radius:8px; box-shadow:0 2px 20px var(--shadow); }
+    table { width:100%; border-collapse:collapse; background:#fff; font-size:.88rem; }
+    thead { background:var(--ink); color:var(--cream); }
+    th { padding:.9rem 1.2rem; text-align:left; font-size:.74rem; letter-spacing:.14em; text-transform:uppercase; font-weight:500; }
+    td { padding:.85rem 1.2rem; border-bottom:1px solid rgba(200,133,42,.12); vertical-align:top; }
+    tbody tr:hover { background:var(--cream); }
+    .empty { text-align:center; color:var(--warm-gray); padding:1.5rem; }
+    .stars { color:var(--amber); letter-spacing:2px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-circle">F</div>
+    <div class="brand-text"><h1>Folio &amp; Ink</h1><p>Curated Bookstore &amp; Reading Community</p></div>
+  </header>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="listofbooks.html">List of Books</a>
+    <a href="registration.html">Customer Registration</a>
+    <a href="feedback.html">Feedback</a>
+    <a href="admin.html" class="active">Stored Responses</a>
+  </nav>
+
+  <main>
+    <h2>Registered Customers</h2>
+    <p class="note">Data saved from the registration form.</p>
+    <div class="table-wrapper">
+      <table><thead><tr><th>ID</th><th>Name</th><th>Interests</th><th>Contact</th><th>Registered</th></tr></thead>
+      <tbody id="customers"><tr><td colspan="5" class="empty">Loading…</td></tr></tbody></table>
+    </div>
+
+    <h2>Feedback</h2>
+    <p class="note">Data saved from the feedback form.</p>
+    <div class="table-wrapper">
+      <table><thead><tr><th>ID</th><th>Name</th><th>Rating</th><th>Feedback</th><th>Submitted</th></tr></thead>
+      <tbody id="feedback"><tr><td colspan="5" class="empty">Loading…</td></tr></tbody></table>
+    </div>
+  </main>
+
+  <script>
+    // Build cells with textContent so stored data can never inject HTML
+    function fill(tbodyId, rows, cols) {
+      const tb = document.getElementById(tbodyId);
+      tb.textContent = '';
+      if (!rows.length) {
+        const tr = tb.insertRow(); const td = tr.insertCell();
+        td.colSpan = cols.length; td.className = 'empty'; td.textContent = 'No entries yet.';
+        return;
+      }
+      rows.forEach(r => {
+        const tr = tb.insertRow();
+        cols.forEach(c => {
+          const td = tr.insertCell();
+          if (c === 'rating') {
+            td.className = 'stars';
+            td.textContent = r.rating ? '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating) : '—';
+          } else {
+            td.textContent = r[c] ?? '';
+          }
+        });
+      });
+    }
+    fetch('/api/customers').then(r => r.json()).then(d => fill('customers', d, ['id','name','interests','contact','created_at']));
+    fetch('/api/feedback').then(r => r.json()).then(d => fill('feedback', d, ['id','name','rating','message','created_at']));
+  </script>
+</body>
+</html>

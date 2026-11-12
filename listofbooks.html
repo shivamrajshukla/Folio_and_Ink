@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Folio & Ink – List of Books</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:      #1a1208;
+      --cream:    #f5f0e8;
+      --amber:    #c8852a;
+      --amber-lt: #e8b870;
+      --warm-gray:#7a6e5f;
+      --paper:    #fdfaf4;
+      --shadow:   rgba(26,18,8,0.12);
+    }
+
+    body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); min-height: 100vh; }
+
+    /* HEADER */
+    header {
+      background: var(--ink); padding: 0 3rem;
+      display: flex; align-items: center; gap: 1.2rem;
+      height: 88px; position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 16px var(--shadow);
+    }
+    .logo-circle {
+      width: 52px; height: 52px; background: var(--amber); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--ink); font-weight: 700;
+    }
+    .brand-text h1 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--cream); letter-spacing: 0.02em; }
+    .brand-text p  { font-size: 0.72rem; color: var(--amber-lt); letter-spacing: 0.18em; text-transform: uppercase; margin-top: 1px; }
+
+    /* NAV */
+    nav { background: var(--cream); border-bottom: 2px solid var(--amber); padding: 0 3rem; display: flex; }
+    nav a {
+      display: inline-block; padding: 1rem 1.5rem;
+      font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--warm-gray); text-decoration: none;
+      border-bottom: 3px solid transparent; transition: color 0.2s, border-color 0.2s;
+    }
+    nav a:hover, nav a.active { color: var(--amber); border-bottom-color: var(--amber); }
+
+    /* MAIN */
+    main { max-width: 1100px; margin: 0 auto; padding: 4rem 3rem 6rem; }
+
+    .page-header { margin-bottom: 2.5rem; }
+    .page-header .eyebrow {
+      font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--amber); font-weight: 500; margin-bottom: 0.5rem;
+    }
+    .page-header h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; }
+    .page-header p  { color: var(--warm-gray); margin-top: 0.5rem; font-size: 0.92rem; }
+
+    /* Search bar */
+    .search-bar {
+      display: flex; align-items: center; gap: 0.75rem;
+      background: var(--cream); border: 1px solid rgba(200,133,42,0.3);
+      border-radius: 6px; padding: 0.6rem 1rem;
+      max-width: 360px; margin-bottom: 2rem;
+    }
+    .search-bar input {
+      border: none; background: transparent; outline: none;
+      font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--ink); flex: 1;
+    }
+    .search-bar span { color: var(--warm-gray); }
+
+    /* TABLE */
+    .table-wrapper {
+      overflow-x: auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 20px var(--shadow);
+    }
+    table {
+      width: 100%; border-collapse: collapse;
+      background: #fff;
+      font-size: 0.88rem;
+    }
+    thead {
+      background: var(--ink);
+      color: var(--cream);
+    }
+    thead th {
+      padding: 1rem 1.4rem;
+      text-align: left;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    thead th:first-child { border-radius: 8px 0 0 0; }
+    thead th:last-child  { border-radius: 0 8px 0 0; }
+
+    tbody tr {
+      border-bottom: 1px solid rgba(200,133,42,0.12);
+      transition: background 0.15s;
+    }
+    tbody tr:hover { background: var(--cream); }
+    tbody tr:last-child { border-bottom: none; }
+
+    tbody td { padding: 1rem 1.4rem; vertical-align: middle; }
+
+    .title-cell { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 0.95rem; }
+    .author-cell { color: var(--warm-gray); }
+    .year-badge {
+      display: inline-block; background: rgba(200,133,42,0.12);
+      color: var(--amber); border-radius: 3px;
+      padding: 0.15rem 0.55rem; font-size: 0.78rem; font-weight: 500;
+    }
+    .price-cell { font-weight: 500; color: var(--ink); }
+
+    .row-num { color: var(--warm-gray); font-size: 0.78rem; width: 40px; }
+
+    /* Stats row */
+    .stats-bar {
+      display: flex; gap: 2rem; margin-bottom: 1.5rem;
+      padding: 1rem 1.5rem;
+      background: var(--cream);
+      border-radius: 6px;
+      border: 1px solid rgba(200,133,42,0.2);
+    }
+    .stat { display: flex; flex-direction: column; gap: 0.15rem; }
+    .stat-val { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--amber); }
+    .stat-lbl { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-gray); }
+
+    footer { text-align: center; padding: 2rem; font-size: 0.78rem; color: var(--warm-gray); border-top: 1px solid rgba(200,133,42,0.2); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-circle">F</div>
+    <div class="brand-text">
+      <h1>Folio &amp; Ink</h1>
+      <p>Curated Bookstore &amp; Reading Community</p>
+    </div>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="listofbooks.html" class="active">List of Books</a>
+    <a href="registration.html">Customer Registration</a>
+    <a href="feedback.html">Feedback</a>
+  </nav>
+
+  <main>
+    <div class="page-header">
+      <p class="eyebrow">Our Collection</p>
+      <h2>List of Books</h2>
+      <p>All titles are listed in lexicographic order by book title.</p>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat"><span class="stat-val">20</span><span class="stat-lbl">Total Titles</span></div>
+      <div class="stat"><span class="stat-val">18</span><span class="stat-lbl">Unique Authors</span></div>
+      <div class="stat"><span class="stat-val">10+</span><span class="stat-lbl">Genres</span></div>
+    </div>
+
+    <div class="search-bar">
+      <span>🔍</span>
+      <input type="text" id="searchInput" placeholder="Search by title or author…" oninput="filterTable()"/>
+    </div>
+
+    <div class="table-wrapper">
+      <table id="booksTable">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Book Title</th>
+            <th>First Author</th>
+            <th>Year</th>
+            <th>Price (₹)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Sorted lexicographically by title -->
+          <tr><td class="row-num">1</td><td class="title-cell">1984</td><td class="author-cell">George Orwell</td><td><span class="year-badge">1949</span></td><td class="price-cell">₹299</td></tr>
+          <tr><td class="row-num">2</td><td class="title-cell">Atomic Habits</td><td class="author-cell">James Clear</td><td><span class="year-badge">2018</span></td><td class="price-cell">₹499</td></tr>
+          <tr><td class="row-num">3</td><td class="title-cell">Beloved</td><td class="author-cell">Toni Morrison</td><td><span class="year-badge">1987</span></td><td class="price-cell">₹395</td></tr>
+          <tr><td class="row-num">4</td><td class="title-cell">Brave New World</td><td class="author-cell">Aldous Huxley</td><td><span class="year-badge">1932</span></td><td class="price-cell">₹349</td></tr>
+          <tr><td class="row-num">5</td><td class="title-cell">Crime and Punishment</td><td class="author-cell">Fyodor Dostoevsky</td><td><span class="year-badge">1866</span></td><td class="price-cell">₹450</td></tr>
+          <tr><td class="row-num">6</td><td class="title-cell">Deep Work</td><td class="author-cell">Cal Newport</td><td><span class="year-badge">2016</span></td><td class="price-cell">₹425</td></tr>
+          <tr><td class="row-num">7</td><td class="title-cell">Dune</td><td class="author-cell">Frank Herbert</td><td><span class="year-badge">1965</span></td><td class="price-cell">₹550</td></tr>
+          <tr><td class="row-num">8</td><td class="title-cell">Gone with the Wind</td><td class="author-cell">Margaret Mitchell</td><td><span class="year-badge">1936</span></td><td class="price-cell">₹499</td></tr>
+          <tr><td class="row-num">9</td><td class="title-cell">Harry Potter and the Philosopher's Stone</td><td class="author-cell">J.K. Rowling</td><td><span class="year-badge">1997</span></td><td class="price-cell">₹399</td></tr>
+          <tr><td class="row-num">10</td><td class="title-cell">In Search of Lost Time</td><td class="author-cell">Marcel Proust</td><td><span class="year-badge">1913</span></td><td class="price-cell">₹699</td></tr>
+          <tr><td class="row-num">11</td><td class="title-cell">Meditations</td><td class="author-cell">Marcus Aurelius</td><td><span class="year-badge">180</span></td><td class="price-cell">₹299</td></tr>
+          <tr><td class="row-num">12</td><td class="title-cell">Midnight's Children</td><td class="author-cell">Salman Rushdie</td><td><span class="year-badge">1981</span></td><td class="price-cell">₹450</td></tr>
+          <tr><td class="row-num">13</td><td class="title-cell">Sapiens: A Brief History of Humankind</td><td class="author-cell">Yuval Noah Harari</td><td><span class="year-badge">2011</span></td><td class="price-cell">₹599</td></tr>
+          <tr><td class="row-num">14</td><td class="title-cell">The Alchemist</td><td class="author-cell">Paulo Coelho</td><td><span class="year-badge">1988</span></td><td class="price-cell">₹299</td></tr>
+          <tr><td class="row-num">15</td><td class="title-cell">The Brothers Karamazov</td><td class="author-cell">Fyodor Dostoevsky</td><td><span class="year-badge">1880</span></td><td class="price-cell">₹550</td></tr>
+          <tr><td class="row-num">16</td><td class="title-cell">The Great Gatsby</td><td class="author-cell">F. Scott Fitzgerald</td><td><span class="year-badge">1925</span></td><td class="price-cell">₹349</td></tr>
+          <tr><td class="row-num">17</td><td class="title-cell">The Midnight Library</td><td class="author-cell">Matt Haig</td><td><span class="year-badge">2020</span></td><td class="price-cell">₹499</td></tr>
+          <tr><td class="row-num">18</td><td class="title-cell">The Picture of Dorian Gray</td><td class="author-cell">Oscar Wilde</td><td><span class="year-badge">1890</span></td><td class="price-cell">₹325</td></tr>
+          <tr><td class="row-num">19</td><td class="title-cell">To Kill a Mockingbird</td><td class="author-cell">Harper Lee</td><td><span class="year-badge">1960</span></td><td class="price-cell">₹375</td></tr>
+          <tr><td class="row-num">20</td><td class="title-cell">War and Peace</td><td class="author-cell">Leo Tolstoy</td><td><span class="year-badge">1869</span></td><td class="price-cell">₹649</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <footer>&copy; 2024 Folio &amp; Ink Bookstore. All rights reserved.</footer>
+
+  <script>
+    function filterTable() {
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      const rows = document.querySelectorAll('#booksTable tbody tr');
+      rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        row.style.display = text.includes(q) ? '' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>

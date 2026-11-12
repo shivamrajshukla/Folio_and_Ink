@@ -1,0 +1,13 @@
+{
+  "name": "folio-and-ink-bookstore",
+  "version": "1.0.0",
+  "description": "Bookstore website with registration and feedback stored in SQLite",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.5.0",
+    "express": "^4.21.0"
+  }
+}

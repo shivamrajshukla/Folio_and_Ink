@@ -40,6 +40,3 @@ bookstore.db     Created on first run
 | POST   | /api/feedback   | Save feedback              |
 | GET    | /api/customers  | List stored customers      |
 | GET    | /api/feedback   | List stored feedback       |
-
-Note: `admin.html` and the GET endpoints have no password. That is fine for a local assignment,
-but add authentication before putting this on the internet.
